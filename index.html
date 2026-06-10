@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Rede Social</title>
+    <title>Instagram Clone - Minha Rede Social</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #1877f2;
-            --bg-color: #f0f2f5;
+            --primary-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            --bg-color: #fafafa;
             --card-bg: #ffffff;
-            --text-color: #1c1e21;
-            --border-color: #dddfe2;
+            --text-color: #262626;
+            --border-color: #dbdbdb;
+            --secondary-text: #8e8e8e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
         }
 
+        /* Header */
         header {
             background-color: var(--card-bg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -34,134 +41,556 @@
         }
 
         header h1 {
-            color: var(--primary-color);
-            margin: 0;
-            font-size: 24px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 0 10px;
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 20px;
+            cursor: pointer;
         }
 
-        .post-creator {
-            background: var(--card-bg);
+        .header-icons i:hover {
+            color: var(--secondary-text);
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Feed */
+        .feed {
+            flex: 1;
+            max-width: 470px;
+        }
+
+        /* Stories */
+        .stories {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 15px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .story {
+            min-width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .story:hover {
+            transform: scale(1.05);
+        }
+
+        .story.active {
+            border-color: var(--text-color);
+        }
+
+        /* Post Creator */
+        .post-creator {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .creator-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .creator-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
         }
 
         textarea {
             width: 100%;
-            border: none;
-            background: #f0f2f5;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
             border-radius: 20px;
             padding: 12px 15px;
-            font-size: 16px;
+            font-size: 14px;
             resize: none;
             outline: none;
-            box-sizing: border-box;
+            font-family: inherit;
+            margin-bottom: 12px;
+        }
+
+        textarea::placeholder {
+            color: var(--secondary-text);
+        }
+
+        .creator-actions {
+            display: flex;
+            gap: 10px;
             margin-bottom: 10px;
         }
 
-        button {
-            background-color: var(--primary-color);
+        .creator-actions button {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--secondary-text);
+            cursor: pointer;
+            padding: 8px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .creator-actions button:hover {
+            color: var(--text-color);
+        }
+
+        .post-btn {
+            width: 100%;
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 6px;
-            padding: 8px 20px;
-            font-weight: bold;
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            font-size: 15px;
+            font-size: 14px;
+            transition: opacity 0.2s;
         }
 
-        button:hover {
-            background-color: #166fe5;
+        .post-btn:hover {
+            opacity: 0.9;
         }
 
+        /* Post */
         .post {
             background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+            overflow: hidden;
         }
 
         .post-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .avatar {
+        .post-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .post-avatar {
             width: 40px;
             height: 40px;
-            background-color: #ddd;
+            background: var(--primary-gradient);
             border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .username {
-            font-weight: bold;
-        }
-
-        .post-time {
-            font-size: 12px;
-            color: #65676b;
-        }
-
-        .post-content {
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .post-actions {
-            border-top: 1px solid var(--border-color);
-            padding-top: 10px;
             display: flex;
-            justify-content: space-around;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .post-user-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .post-user-info p {
+            font-size: 12px;
+            color: var(--secondary-text);
+            margin: 0;
+        }
+
+        .post-menu {
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--secondary-text);
+        }
+
+        .post-menu:hover {
+            color: var(--text-color);
+        }
+
+        /* Post Image */
+        .post-image {
+            width: 100%;
+            height: 470px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+
+        /* Post Actions */
+        .post-actions {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .action-group {
+            display: flex;
+            gap: 15px;
         }
 
         .action-btn {
             background: none;
-            color: #65676b;
-            width: auto;
-            padding: 5px 10px;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.2s;
+            padding: 0;
         }
 
         .action-btn:hover {
-            background-color: #f2f2f2;
+            color: var(--secondary-text);
         }
 
-        .like-count {
-            font-size: 13px;
-            color: #65676b;
+        .action-btn.liked {
+            color: #ed4956;
+        }
+
+        /* Post Stats */
+        .post-stats {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .likes {
+            font-size: 14px;
+            font-weight: 600;
             margin-bottom: 5px;
+        }
+
+        .comments-preview {
+            font-size: 13px;
+            color: var(--secondary-text);
+            margin-bottom: 5px;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: var(--secondary-text);
+        }
+
+        /* Post Content */
+        .post-content {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .post-caption {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .post-caption strong {
+            font-weight: 600;
+        }
+
+        /* Comments */
+        .post-comments {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .comment strong {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .view-more-comments {
+            color: var(--secondary-text);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        /* Comment Input */
+        .comment-input {
+            padding: 12px 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .comment-input input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .comment-input button {
+            background: none;
+            border: none;
+            color: var(--primary-gradient);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 300px;
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .sidebar-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-avatar {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .sidebar-profile-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .sidebar-profile-info p {
+            font-size: 12px;
+            color: var(--secondary-text);
+            margin: 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--secondary-text);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-item:hover {
+            background: var(--bg-color);
+        }
+
+        .sidebar-item-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .sidebar-item-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .feed {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-container {
+                flex-direction: column;
+                padding: 0;
+            }
+
+            .post-image {
+                height: 300px;
+            }
+
+            header {
+                padding: 10px 15px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
-        <h1>SocialManus</h1>
-        <div>
-            <span id="user-display">Usuário Logado</span>
+        <h1>Instagram</h1>
+        <div class="header-icons">
+            <i class="fas fa-heart" title="Notificações"></i>
+            <i class="fas fa-paper-plane" title="Mensagens"></i>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Criador de Post -->
-        <div class="post-creator">
-            <textarea id="post-input" rows="2" placeholder="No que você está pensando?"></textarea>
-            <button onclick="addPost()">Publicar</button>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Feed -->
+        <div class="feed">
+            <!-- Stories -->
+            <div class="stories">
+                <div class="story active">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="story">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="story">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="story">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="story">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <!-- Post Creator -->
+            <div class="post-creator">
+                <div class="creator-header">
+                    <div class="creator-avatar">V</div>
+                    <textarea id="post-input" rows="1" placeholder="No que você está pensando?"></textarea>
+                </div>
+                <div class="creator-actions">
+                    <button><i class="fas fa-image"></i> Foto/Vídeo</button>
+                    <button><i class="fas fa-face-smile"></i> Sentimento</button>
+                    <button><i class="fas fa-location-dot"></i> Local</button>
+                </div>
+                <button class="post-btn" onclick="addPost()">Publicar</button>
+            </div>
+
+            <!-- Feed de Posts -->
+            <div id="feed">
+                <!-- Posts aparecerão aqui -->
+            </div>
         </div>
 
-        <!-- Feed de Posts -->
-        <div id="feed">
-            <!-- Posts aparecerão aqui -->
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-avatar">V</div>
+                <div class="sidebar-profile-info">
+                    <h3>Você</h3>
+                    <p>Seu perfil</p>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Sugestões para você</div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
+                    <div class="sidebar-item-name">João Silva</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
+                    <div class="sidebar-item-name">Maria Oliveira</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
+                    <div class="sidebar-item-name">Pedro Santos</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Menu</div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon"><i class="fas fa-bookmark"></i></div>
+                    <div class="sidebar-item-name">Salvos</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-item-icon"><i class="fas fa-cog"></i></div>
+                    <div class="sidebar-item-name">Configurações</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -170,16 +599,24 @@
             {
                 id: 1,
                 user: "João Silva",
-                content: "Olá pessoal! Acabei de entrar nessa nova rede social. Alguém por aí?",
-                likes: 5,
-                time: "há 2 horas"
+                username: "joaosilva",
+                avatar: "J",
+                content: "Que dia lindo para um passeio! 🌞",
+                likes: 245,
+                liked: false,
+                time: "há 2 horas",
+                comments: 12
             },
             {
                 id: 2,
                 user: "Maria Oliveira",
-                content: "O dia está lindo hoje para codar! 🚀",
-                likes: 12,
-                time: "há 5 horas"
+                username: "mariaoliv",
+                avatar: "M",
+                content: "Codando e curtindo o dia! 🚀 #desenvolvedor #tech",
+                likes: 532,
+                liked: false,
+                time: "há 5 horas",
+                comments: 28
             }
         ];
 
@@ -192,18 +629,52 @@
                 postElement.className = 'post';
                 postElement.innerHTML = `
                     <div class="post-header">
-                        <div class="avatar"></div>
-                        <div>
-                            <div class="username">${post.user}</div>
-                            <div class="post-time">${post.time}</div>
+                        <div class="post-user">
+                            <div class="post-avatar">${post.avatar}</div>
+                            <div class="post-user-info">
+                                <h3>${post.user}</h3>
+                                <p>@${post.username} • ${post.time}</p>
+                            </div>
+                        </div>
+                        <div class="post-menu">
+                            <i class="fas fa-ellipsis"></i>
                         </div>
                     </div>
-                    <div class="post-content">${post.content}</div>
-                    <div class="like-count">${post.likes} curtidas</div>
+
+                    <div class="post-image">
+                        <i class="fas fa-image"></i>
+                    </div>
+
                     <div class="post-actions">
-                        <button class="action-btn" onclick="likePost(${post.id})">Curtir</button>
-                        <button class="action-btn">Comentar</button>
-                        <button class="action-btn">Compartilhar</button>
+                        <div class="action-group">
+                            <button class="action-btn ${post.liked ? 'liked' : ''}" onclick="likePost(${post.id})">
+                                <i class="fas ${post.liked ? 'fa-heart' : 'fa-heart'}" style="color: ${post.liked ? '#ed4956' : 'inherit'}"></i>
+                            </button>
+                            <button class="action-btn"><i class="fas fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                        <button class="action-btn"><i class="fas fa-bookmark"></i></button>
+                    </div>
+
+                    <div class="post-stats">
+                        <div class="likes">${post.likes} curtidas</div>
+                        <div class="comments-preview"><strong>${post.user}</strong> ${post.content}</div>
+                        <div class="post-time">${post.comments} comentários</div>
+                    </div>
+
+                    <div class="post-comments">
+                        <div class="view-more-comments">Ver todos os ${post.comments} comentários</div>
+                        <div class="comment">
+                            <strong>usuario1:</strong> Que legal! 😍
+                        </div>
+                        <div class="comment">
+                            <strong>usuario2:</strong> Adorei! 🔥
+                        </div>
+                    </div>
+
+                    <div class="comment-input">
+                        <input type="text" placeholder="Adicione um comentário...">
+                        <button>Publicar</button>
                     </div>
                 `;
                 feed.appendChild(postElement);
@@ -218,9 +689,13 @@
                 const newPost = {
                     id: posts.length + 1,
                     user: "Você",
+                    username: "seu_usuario",
+                    avatar: "V",
                     content: content,
                     likes: 0,
-                    time: "Agora mesmo"
+                    liked: false,
+                    time: "Agora mesmo",
+                    comments: 0
                 };
 
                 posts.push(newPost);
@@ -234,7 +709,8 @@
         function likePost(id) {
             const post = posts.find(p => p.id === id);
             if (post) {
-                post.likes++;
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
                 renderPosts();
             }
         }
