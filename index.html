@@ -336,6 +336,8 @@
             justify-content: center;
             color: var(--text-secondary);
             font-size: 60px;
+            background-size: cover;
+            background-position: center;
         }
 
         .post-actions {
@@ -531,6 +533,8 @@
             justify-content: center;
             font-size: 50px;
             color: var(--text-secondary);
+            background-size: cover;
+            background-position: center;
         }
 
         .story-info {
@@ -585,6 +589,8 @@
             align-items: center;
             justify-content: center;
             font-size: 80px;
+            background-size: cover;
+            background-position: center;
         }
 
         .story-viewer-close {
@@ -931,6 +937,29 @@
     </div>
 
     <script>
+        // URLs de imagens aleatórias (Unsplash - similar ao Pinterest)
+        const imageUrls = [
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1517694712202-cad84cf45f1d?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1500295942863-6f3031224c94?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1514306688772-2c84f01e4675?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&h=700&fit=crop',
+            'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=700&fit=crop'
+        ];
+
+        function getRandomImage() {
+            return imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        }
+
         const posts = [
             {
                 id: 1,
@@ -941,7 +970,8 @@
                 likes: 245,
                 liked: false,
                 time: "há 2 horas",
-                comments: 12
+                comments: 12,
+                image: getRandomImage()
             },
             {
                 id: 2,
@@ -952,15 +982,16 @@
                 likes: 532,
                 liked: false,
                 time: "há 5 horas",
-                comments: 28
+                comments: 28,
+                image: getRandomImage()
             }
         ];
 
         const stories = [
-            { id: 1, user: "João Silva", time: "há 1h", icon: "🚀" },
-            { id: 2, user: "Maria Oliveira", time: "há 2h", icon: "🎨" },
-            { id: 3, user: "Pedro Santos", time: "há 3h", icon: "💻" },
-            { id: 4, user: "Ana Costa", time: "há 4h", icon: "📱" }
+            { id: 1, user: "João Silva", time: "há 1h", image: getRandomImage() },
+            { id: 2, user: "Maria Oliveira", time: "há 2h", image: getRandomImage() },
+            { id: 3, user: "Pedro Santos", time: "há 3h", image: getRandomImage() },
+            { id: 4, user: "Ana Costa", time: "há 4h", image: getRandomImage() }
         ];
 
         let currentStoryIndex = 0;
@@ -1013,9 +1044,7 @@
                         </div>
                     </div>
 
-                    <div class="post-image">
-                        <i class="fas fa-image"></i>
-                    </div>
+                    <div class="post-image" style="background-image: url('${post.image}');"></div>
 
                     <div class="post-actions">
                         <div class="action-group">
@@ -1064,7 +1093,7 @@
                 storyCard.className = 'story-card';
                 storyCard.onclick = () => openStoryViewer(index);
                 storyCard.innerHTML = `
-                    <div class="story-image">${story.icon}</div>
+                    <div class="story-image" style="background-image: url('${story.image}');"></div>
                     <div class="story-info">
                         <h4>${story.user}</h4>
                         <p>${story.time}</p>
@@ -1083,7 +1112,7 @@
             posts.forEach(post => {
                 const postCard = document.createElement('div');
                 postCard.className = 'profile-post';
-                postCard.innerHTML = '<i class="fas fa-image"></i>';
+                postCard.style.backgroundImage = `url('${post.image}')`;
                 profilePosts.appendChild(postCard);
             });
         }
@@ -1102,7 +1131,8 @@
                     likes: 0,
                     liked: false,
                     time: "Agora mesmo",
-                    comments: 0
+                    comments: 0,
+                    image: getRandomImage()
                 };
 
                 posts.push(newPost);
@@ -1134,11 +1164,14 @@
 
         function updateStoryViewer() {
             const story = stories[currentStoryIndex];
-            document.getElementById('storyViewerContent').innerHTML = `
-                <div style="text-align: center; color: white;">
-                    <div style="font-size: 100px; margin-bottom: 20px;">${story.icon}</div>
-                    <h3>${story.user}</h3>
-                    <p>${story.time}</p>
+            const storyViewerContent = document.getElementById('storyViewerContent');
+            storyViewerContent.style.backgroundImage = `url('${story.image}')`;
+            storyViewerContent.innerHTML = `
+                <div style="text-align: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+                    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); width: 100%; height: 100%;
+                    display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;">
+                    <h3 style="margin: 0 0 5px 0;">${story.user}</h3>
+                    <p style="margin: 0; font-size: 14px;">${story.time}</p>
                 </div>
             `;
         }
