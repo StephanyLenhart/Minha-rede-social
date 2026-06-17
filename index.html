@@ -828,7 +828,7 @@
                     <!-- Post Creator -->
                     <div class="post-creator">
                         <div class="creator-header">
-                            <div class="creator-avatar">V</div>
+                            <div class="creator-avatar" id="creator-avatar" style="background-image: url(''); background-size: cover; background-position: center;"></div>
                             <textarea id="post-input" rows="1" placeholder="No que você está pensando?"></textarea>
                         </div>
                         <div class="creator-actions">
@@ -893,7 +893,7 @@
         <!-- Profile Section -->
         <div id="profile" class="section">
             <div class="profile-header">
-                <div class="profile-avatar">V</div>
+                <div class="profile-avatar" id="profile-avatar" style="background-image: url(''); background-size: cover; background-position: center;"></div>
                 <h2>Seu Perfil</h2>
                 <p>@seu_usuario • Desenvolvedor Web</p>
                 <p style="color: var(--text-secondary); font-size: 14px;">Apaixonado por tecnologia e design. Criando experiências incríveis na web.</p>
@@ -956,8 +956,26 @@
             'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=700&fit=crop'
         ];
 
+        // URLs de avatares (fotos de perfil)
+        const avatarUrls = [
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1517694712202-cad84cf45f1d?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1500295942863-6f3031224c94?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1514306688772-2c84f01e4675?w=100&h=100&fit=crop',
+            'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=100&h=100&fit=crop'
+        ];
+
         function getRandomImage() {
             return imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        }
+
+        function getRandomAvatar() {
+            return avatarUrls[Math.floor(Math.random() * avatarUrls.length)];
         }
 
         const posts = [
@@ -965,7 +983,7 @@
                 id: 1,
                 user: "João Silva",
                 username: "joaosilva",
-                avatar: "J",
+                avatar: getRandomAvatar(),
                 content: "Que dia lindo para programar! 🌞 Finalizando um novo projeto incrível.",
                 likes: 245,
                 liked: false,
@@ -977,7 +995,7 @@
                 id: 2,
                 user: "Maria Oliveira",
                 username: "mariaoliv",
-                avatar: "M",
+                avatar: getRandomAvatar(),
                 content: "Novo design finalizado! O que vocês acham? 🎨 #design #webdesign",
                 likes: 532,
                 liked: false,
@@ -1033,7 +1051,7 @@
                 postElement.innerHTML = `
                     <div class="post-header">
                         <div class="post-user">
-                            <div class="post-avatar">${post.avatar}</div>
+                            <div class="post-avatar" style="background-image: url('${post.avatar}'); background-size: cover; background-position: center;"></div>
                             <div class="post-user-info">
                                 <h3>${post.user}</h3>
                                 <p>@${post.username} • ${post.time}</p>
@@ -1105,6 +1123,7 @@
 
         function renderProfile() {
             document.getElementById('profile-posts-count').textContent = posts.length;
+            document.getElementById('profile-avatar').style.backgroundImage = `url('${getRandomAvatar()}')`;
             
             const profilePosts = document.getElementById('profile-posts');
             profilePosts.innerHTML = '';
@@ -1126,7 +1145,7 @@
                     id: posts.length + 1,
                     user: "Você",
                     username: "seu_usuario",
-                    avatar: "V",
+                    avatar: getRandomAvatar(),
                     content: content,
                     likes: 0,
                     liked: false,
@@ -1186,7 +1205,8 @@
             updateStoryViewer();
         }
 
-        // Inicializar feed
+        // Inicializar feed e avatares
+        document.getElementById('creator-avatar').style.backgroundImage = `url('${getRandomAvatar()}')`;
         renderFeed();
     </script>
 </body>
