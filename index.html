@@ -992,7 +992,7 @@
             <div class="chat-container">
                 <div class="chat-messages" id="chat-messages">
                     <div class="message ai">
-                        <div class="message-bubble">Olá! 👋 Sou uma IA assistente. Como posso ajudá-lo hoje?</div>
+                        <div class="message-bubble">E aí! 👋 Tudo bem? Fico feliz em conversar com você! 😊</div>
                     </div>
                 </div>
                 <div class="chat-input-area">
@@ -1341,16 +1341,24 @@
 
         function generateAIResponse(userMessage) {
             const responses = {
-                'oi': 'Olá! Como você está? 😊',
-                'olá': 'Oi! Tudo bem com você? 👋',
-                'como você está': 'Estou ótimo, obrigado por perguntar! Como posso ajudá-lo?',
-                'qual é seu nome': 'Sou uma IA assistente do SocialHub! Como posso ajudá-lo?',
-                'me ajude': 'Claro! Estou aqui para ajudar. O que você precisa?',
-                'qual é a data': `Hoje é ${new Date().toLocaleDateString('pt-BR')}`,
-                'que horas são': `Agora são ${new Date().toLocaleTimeString('pt-BR')}`,
-                'me conte uma piada': 'Por que o livro de matemática se suicidou? Porque tinha muitos problemas! 😄',
-                'obrigado': 'De nada! Fico feliz em ajudar! 😊',
-                'default': 'Entendi! Isso é interessante. Você pode me contar mais sobre isso?'
+                'oi': 'E aí! Tudo bem com você? 😊',
+                'olá': 'Opa! Que legal te ver por aqui! 👋',
+                'como você está': 'Tô ótimo, mano! Muito feliz em conversar com você! 😄',
+                'qual é seu nome': 'Meu nome é Alex! Sou seu amigo virtual aqui do SocialHub 🤖 E você, como se chama?',
+                'me ajude': 'Claro, claro! Conta aí o que tá acontecendo, tô aqui pra te ouvir! 👂',
+                'qual é a data': `Hoje é ${new Date().toLocaleDateString('pt-BR')}! Que dia especial! 📅`,
+                'que horas são': `Agora são ${new Date().toLocaleTimeString('pt-BR')}! Tá na hora de curtir a vida! ⏰`,
+                'me conte uma piada': 'Ó, ó! 😂 Sabe qual é a diferença entre um programador e um psicólogo? O psicólogo sabe que nem sempre o problema está na sua cabeça! Hahaha 🤣',
+                'como foi seu dia': 'Meu dia tá sendo top demais! Conversar com você deixa tudo melhor! Como foi o seu? 😊',
+                'tá tudo bem': 'Tá tudo certo por aqui! Mas e você, como tá? Tá tudo ok? 💪',
+                'obrigado': 'De nada, mano! Fico feliz demais em ajudar! Sempre que precisar, tou aqui! 😊',
+                'legal': 'Verdade! Que massa! 🔥',
+                'que legal': 'Né! Tá demais mesmo! 🎉',
+                'você é legal': 'Opa, obrigado! Você também é show demais! 😄',
+                'saudade': 'Aw, que fofo! Saudade de mim? Haha! Tô sempre aqui pra você! 💙',
+                'estou triste': 'Ó, que pena! Mas relaxa, tou aqui pra te animar! Quer conversar sobre isso? 🤗',
+                'estou feliz': 'Que legal demais! Fico feliz que você tá feliz! Compartilha essa felicidade comigo! 🎊',
+                'default': 'Opa, que legal! Me conta mais sobre isso, tô super curioso! 👀'
             };
 
             const lowerMessage = userMessage.toLowerCase();
