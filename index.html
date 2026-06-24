@@ -30,6 +30,174 @@
             overflow-x: hidden;
         }
 
+        /* Auth Screen */
+        .auth-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .auth-screen.hidden {
+            display: none;
+        }
+
+        .auth-container {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .auth-logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .auth-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--text-primary);
+            background: var(--bg-lighter);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .auth-toggle {
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .auth-toggle a {
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .auth-toggle a:hover {
+            color: var(--accent);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .auth-btn-option {
+            flex: 1;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-btn-option:hover {
+            background: var(--border);
+            transform: translateY(-3px);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
         /* Header */
         header {
             background: var(--bg-light);
@@ -54,6 +222,7 @@
             gap: 20px;
             font-size: 18px;
             cursor: pointer;
+            align-items: center;
         }
 
         .header-icons i {
@@ -64,6 +233,30 @@
         .header-icons i:hover {
             color: var(--text-primary);
             transform: scale(1.1);
+        }
+
+        .logout-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--border);
+        }
+
+        .app-screen {
+            display: none;
+        }
+
+        .app-screen.active {
+            display: block;
         }
 
         /* Navigation */
@@ -858,146 +1051,205 @@
             .chat-container {
                 height: 400px;
             }
+
+            .auth-container {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <h1><i class="fas fa-rocket"></i> SocialHub</h1>
-        <div class="header-icons">
-            <i class="fas fa-bell" title="Notificações"></i>
-            <i class="fas fa-envelope" title="Mensagens"></i>
-        </div>
-    </header>
+    <!-- Auth Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            <div class="auth-logo">🚀</div>
+            <h1 class="auth-title">SocialHub</h1>
+            <p class="auth-subtitle">Sua rede social premium</p>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <button class="nav-btn active" onclick="switchSection('feed')">
-                <i class="fas fa-home"></i> Feed
-            </button>
-            <button class="nav-btn" onclick="switchSection('profile')">
-                <i class="fas fa-user"></i> Perfil
-            </button>
-            <button class="nav-btn" onclick="switchSection('chat')">
-                <i class="fas fa-comments"></i> Chat IA
-            </button>
-        </div>
-    </nav>
-
-    <!-- Main Container -->
-    <div class="main-container">
-
-        <!-- Feed Section -->
-        <div id="feed" class="section active">
-            <div class="feed-container">
-                <!-- Feed -->
-                <div>
-                    <!-- Post Creator -->
-                    <div class="post-creator">
-                        <div class="creator-header">
-                            <div class="creator-avatar" id="creator-avatar"></div>
-                            <textarea id="post-input" rows="1" placeholder="No que você está pensando?"></textarea>
-                        </div>
-                        <div class="creator-actions">
-                            <button><i class="fas fa-image"></i> Foto</button>
-                            <button><i class="fas fa-video"></i> Vídeo</button>
-                            <button><i class="fas fa-smile"></i> Sentimento</button>
-                        </div>
-                        <button class="post-btn" onclick="addPost()">Publicar</button>
-                    </div>
-
-                    <!-- Feed de Posts -->
-                    <div id="feed-posts">
-                        <!-- Posts aparecerão aqui -->
-                    </div>
+            <!-- Login Form -->
+            <div class="auth-form active" id="loginForm">
+                <div class="error-message" id="loginError"></div>
+                <div class="form-group">
+                    <label>Usuário</label>
+                    <input type="text" id="loginUsername" placeholder="Digite seu usuário">
                 </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
+                </div>
+                <button class="auth-btn" onclick="handleLogin()">Entrar</button>
+                <div class="auth-toggle">
+                    Não tem conta? <a onclick="toggleForms()">Criar conta</a>
+                </div>
+            </div>
 
-                <!-- Sidebar -->
-                <div class="sidebar">
-                    <div class="sidebar-card">
-                        <div class="sidebar-title">Sugestões para você</div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
-                            <div class="sidebar-item-name">João Silva</div>
+            <!-- Signup Form -->
+            <div class="auth-form" id="signupForm">
+                <div class="error-message" id="signupError"></div>
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="signupName" placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label>Usuário</label>
+                    <input type="text" id="signupUsername" placeholder="Escolha um usuário">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="signupPassword" placeholder="Crie uma senha">
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="signupPasswordConfirm" placeholder="Confirme sua senha">
+                </div>
+                <button class="auth-btn" onclick="handleSignup()">Criar Conta</button>
+                <div class="auth-toggle">
+                    Já tem conta? <a onclick="toggleForms()">Entrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Screen -->
+    <div class="app-screen" id="appScreen">
+        <!-- Header -->
+        <header>
+            <h1><i class="fas fa-rocket"></i> SocialHub</h1>
+            <div class="header-icons">
+                <i class="fas fa-bell" title="Notificações"></i>
+                <i class="fas fa-envelope" title="Mensagens"></i>
+                <button class="logout-btn" onclick="handleLogout()">Sair</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-container">
+                <button class="nav-btn active" onclick="switchSection('feed')">
+                    <i class="fas fa-home"></i> Feed
+                </button>
+                <button class="nav-btn" onclick="switchSection('profile')">
+                    <i class="fas fa-user"></i> Perfil
+                </button>
+                <button class="nav-btn" onclick="switchSection('chat')">
+                    <i class="fas fa-comments"></i> Chat IA
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Container -->
+        <div class="main-container">
+
+            <!-- Feed Section -->
+            <div id="feed" class="section active">
+                <div class="feed-container">
+                    <!-- Feed -->
+                    <div>
+                        <!-- Post Creator -->
+                        <div class="post-creator">
+                            <div class="creator-header">
+                                <div class="creator-avatar" id="creator-avatar"></div>
+                                <textarea id="post-input" rows="1" placeholder="No que você está pensando?"></textarea>
+                            </div>
+                            <div class="creator-actions">
+                                <button><i class="fas fa-image"></i> Foto</button>
+                                <button><i class="fas fa-video"></i> Vídeo</button>
+                                <button><i class="fas fa-smile"></i> Sentimento</button>
+                            </div>
+                            <button class="post-btn" onclick="addPost()">Publicar</button>
                         </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
-                            <div class="sidebar-item-name">Maria Oliveira</div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
-                            <div class="sidebar-item-name">Pedro Santos</div>
+
+                        <!-- Feed de Posts -->
+                        <div id="feed-posts">
+                            <!-- Posts aparecerão aqui -->
                         </div>
                     </div>
 
-                    <div class="sidebar-card">
-                        <div class="sidebar-title">Trending</div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item-icon"><i class="fas fa-fire"></i></div>
-                            <div class="sidebar-item-name">#WebDevelopment</div>
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <div class="sidebar-card">
+                            <div class="sidebar-title">Sugestões para você</div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
+                                <div class="sidebar-item-name">João Silva</div>
+                            </div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
+                                <div class="sidebar-item-name">Maria Oliveira</div>
+                            </div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-icon"><i class="fas fa-user"></i></div>
+                                <div class="sidebar-item-name">Pedro Santos</div>
+                            </div>
                         </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item-icon"><i class="fas fa-fire"></i></div>
-                            <div class="sidebar-item-name">#Design</div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item-icon"><i class="fas fa-fire"></i></div>
-                            <div class="sidebar-item-name">#Tech</div>
+
+                        <div class="sidebar-card">
+                            <div class="sidebar-title">Trending</div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-icon"><i class="fas fa-fire"></i></div>
+                                <div class="sidebar-item-name">#WebDevelopment</div>
+                            </div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-icon"><i class="fas fa-fire"></i></div>
+                                <div class="sidebar-item-name">#Design</div>
+                            </div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-icon"><i class="fas fa-fire"></i></div>
+                                <div class="sidebar-item-name">#Tech</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Profile Section -->
-        <div id="profile" class="section">
-            <div class="profile-header">
-                <div class="profile-avatar" id="profile-avatar" onclick="openEditProfile()"></div>
-                <h2 id="profile-name">Seu Perfil</h2>
-                <p id="profile-username">@seu_usuario</p>
-                <p id="profile-bio" style="color: var(--text-secondary); font-size: 14px;">Clique em "Editar Perfil" para adicionar uma bio</p>
-                
-                <div class="profile-stats">
-                    <div class="stat">
-                        <div class="stat-number" id="profile-posts-count">0</div>
-                        <div class="stat-label">Posts</div>
+            <!-- Profile Section -->
+            <div id="profile" class="section">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar" onclick="openEditProfile()"></div>
+                    <h2 id="profile-name">Seu Perfil</h2>
+                    <p id="profile-username">@seu_usuario</p>
+                    <p id="profile-bio" style="color: var(--text-secondary); font-size: 14px;">Clique em "Editar Perfil" para adicionar uma bio</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-number" id="profile-posts-count">0</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">1.2K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">456</div>
+                            <div class="stat-label">Seguindo</div>
+                        </div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-number">1.2K</div>
-                        <div class="stat-label">Seguidores</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">456</div>
-                        <div class="stat-label">Seguindo</div>
+
+                    <div class="profile-actions">
+                        <button onclick="openEditProfile()"><i class="fas fa-edit"></i> Editar Perfil</button>
+                        <button><i class="fas fa-cog"></i> Configurações</button>
                     </div>
                 </div>
 
-                <div class="profile-actions">
-                    <button onclick="openEditProfile()"><i class="fas fa-edit"></i> Editar Perfil</button>
-                    <button><i class="fas fa-cog"></i> Configurações</button>
+                <h3 style="margin-bottom: 20px; font-size: 18px;">Seus Posts</h3>
+                <div class="profile-posts" id="profile-posts">
+                    <!-- Posts do perfil aparecerão aqui -->
                 </div>
             </div>
 
-            <h3 style="margin-bottom: 20px; font-size: 18px;">Seus Posts</h3>
-            <div class="profile-posts" id="profile-posts">
-                <!-- Posts do perfil aparecerão aqui -->
-            </div>
-        </div>
-
-        <!-- Chat Section -->
-        <div id="chat" class="section">
-            <div class="chat-container">
-                <div class="chat-messages" id="chat-messages">
-                    <div class="message ai">
-                        <div class="message-bubble">E aí! 👋 Tudo bem? Fico feliz em conversar com você! 😊</div>
+            <!-- Chat Section -->
+            <div id="chat" class="section">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message ai">
+                            <div class="message-bubble">E aí! 👋 Tudo bem? Fico feliz em conversar com você! 😊</div>
+                        </div>
                     </div>
-                </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatKeypress(event)">
-                    <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatKeypress(event)">
+                        <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1080,13 +1332,101 @@
             return avatarUrls[Math.floor(Math.random() * avatarUrls.length)];
         }
 
+        // Sistema de Autenticação
+        let users = JSON.parse(localStorage.getItem('socialHubUsers')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('socialHubCurrentUser')) || null;
+
+        function toggleForms() {
+            document.getElementById('loginForm').classList.toggle('active');
+            document.getElementById('signupForm').classList.toggle('active');
+            document.getElementById('loginError').classList.remove('show');
+            document.getElementById('signupError').classList.remove('show');
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!username || !password) {
+                showError('loginError', 'Por favor, preencha todos os campos!');
+                return;
+            }
+
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('socialHubCurrentUser', JSON.stringify(currentUser));
+                showApp();
+            } else {
+                showError('loginError', 'Usuário ou senha incorretos!');
+            }
+        }
+
+        function handleSignup() {
+            const name = document.getElementById('signupName').value.trim();
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
+            const passwordConfirm = document.getElementById('signupPasswordConfirm').value.trim();
+
+            if (!name || !username || !password || !passwordConfirm) {
+                showError('signupError', 'Por favor, preencha todos os campos!');
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                showError('signupError', 'As senhas não coincidem!');
+                return;
+            }
+
+            if (users.find(u => u.username === username)) {
+                showError('signupError', 'Esse usuário já existe!');
+                return;
+            }
+
+            const newUser = {
+                name: name,
+                username: username,
+                password: password,
+                bio: 'Novo no SocialHub!',
+                avatar: getRandomAvatar(),
+                posts: []
+            };
+
+            users.push(newUser);
+            localStorage.setItem('socialHubUsers', JSON.stringify(users));
+            currentUser = newUser;
+            localStorage.setItem('socialHubCurrentUser', JSON.stringify(currentUser));
+            showApp();
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('socialHubCurrentUser');
+            document.getElementById('authScreen').classList.remove('hidden');
+            document.getElementById('appScreen').classList.remove('active');
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('signupName').value = '';
+            document.getElementById('signupUsername').value = '';
+            document.getElementById('signupPassword').value = '';
+            document.getElementById('signupPasswordConfirm').value = '';
+        }
+
+        function showApp() {
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('appScreen').classList.add('active');
+            renderFeed();
+            renderProfile();
+        }
+
         // Dados do usuário
-        let userData = {
-            name: 'Seu Perfil',
-            username: '@seu_usuario',
-            bio: 'Clique em "Editar Perfil" para adicionar uma bio',
-            avatar: getRandomAvatar()
-        };
+        let userData = currentUser ? { ...currentUser } : null;
 
         const posts = [
             {
@@ -1203,9 +1543,11 @@
         }
 
         function renderProfile() {
+            if (!userData) return;
+
             document.getElementById('profile-posts-count').textContent = posts.length;
             document.getElementById('profile-name').textContent = userData.name;
-            document.getElementById('profile-username').textContent = userData.username;
+            document.getElementById('profile-username').textContent = '@' + userData.username;
             document.getElementById('profile-bio').textContent = userData.bio;
             document.getElementById('profile-avatar').style.backgroundImage = `url('${userData.avatar}')`;
             document.getElementById('creator-avatar').style.backgroundImage = `url('${userData.avatar}')`;
@@ -1229,7 +1571,7 @@
                 const newPost = {
                     id: posts.length + 1,
                     user: userData.name,
-                    username: userData.username.replace('@', ''),
+                    username: userData.username,
                     avatar: userData.avatar,
                     content: content,
                     likes: 0,
@@ -1297,6 +1639,15 @@
             userData.bio = document.getElementById('edit-bio').value || 'Clique em "Editar Perfil" para adicionar uma bio';
             userData.avatar = document.getElementById('edit-avatar').value || getRandomAvatar();
             
+            currentUser = userData;
+            localStorage.setItem('socialHubCurrentUser', JSON.stringify(currentUser));
+
+            const userIndex = users.findIndex(u => u.username === userData.username);
+            if (userIndex !== -1) {
+                users[userIndex] = userData;
+                localStorage.setItem('socialHubUsers', JSON.stringify(users));
+            }
+            
             closeEditProfile();
             renderProfile();
             renderFeed();
@@ -1310,12 +1661,10 @@
             const message = input.value.trim();
 
             if (message) {
-                // Adicionar mensagem do usuário
                 chatMessages.push({ role: 'user', text: message });
                 displayMessage('user', message);
                 input.value = '';
 
-                // Simular resposta da IA
                 setTimeout(() => {
                     const aiResponse = generateAIResponse(message);
                     chatMessages.push({ role: 'ai', text: aiResponse });
@@ -1371,7 +1720,9 @@
         }
 
         // Inicializar
-        renderFeed();
+        if (currentUser) {
+            showApp();
+        }
     </script>
 </body>
 </html>
